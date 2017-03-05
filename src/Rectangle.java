@@ -6,6 +6,7 @@
  * Assumptions/Restrictions: 
  * - The top and the left of a rectangle will be inclusive with respect to 
  * containing a point, and the bottom and right will be exclusive.
+ * - height will increase downwards.
  * 
  * Noteworthy Features:
  * 
@@ -16,17 +17,6 @@ public class Rectangle {
     private Point topLeft; // the top left point of the rectangle
     private int width;
     private int height;
-    
-    // the bounds on each side of the rectangle
-    private Bounds bounds;
-    
-    
-    /**
-     * @return the bounds
-     */
-    public Bounds getBounds() {
-        return bounds;
-    }
 
     /**
      * Creates a default 1x1 rectangle with top left point at (0,0).
@@ -35,11 +25,6 @@ public class Rectangle {
         topLeft = new Point();
         width = 1;
         height = 1;
-        
-        bounds.Upper = 0;
-        bounds.Left = 0;
-        bounds.Right = 1;
-        bounds.Lower = 1;
     }
     
     /**
@@ -54,29 +39,47 @@ public class Rectangle {
         topLeft = topLeftPoint;
         this.width = width;
         this.height = height;
-        
-        bounds.Upper = topLeft.Y;
-        bounds.Left = topLeft.X;
-        bounds.Right = bounds.Left + width;
-        bounds.Lower = bounds.Upper - height;
     }
     
     /**
      * Creates a new rectangle with the specified bounds.
-     * @param upper The upper bound.
+     * @param top The top bound.
      * @param left The left bound.
      * @param right The right bound.
-     * @param lower The lower bound.
+     * @param bottom The bottom bound.
      */
-    public Rectangle(int upper, int left, int right, int lower){
-        topLeft = new Point(left, upper);
+    public Rectangle(int top, int left, int right, int bottom){
+        topLeft = new Point(left, top);
         this.width = right - left;
-        this.height = upper - lower;
-        
-        bounds.Upper = upper;
-        bounds.Left = lower;
-        bounds.Right = right;
-        bounds.Lower = lower;
+        this.height = bottom - top;
+    }
+    
+    /**
+     * @return The left bound of the rectangle.
+     */
+    public int left(){
+        return topLeft.X;
+    }
+    
+    /**
+     * @return The right bound of the rectangle.
+     */
+    public int right(){
+        return topLeft.X + width;
+    }
+
+    /**
+     * @return The top bound of the rectangle.
+     */
+    public int top(){
+        return topLeft.Y;
+    }
+
+    /**
+     * @return The bottom bound of the rectangle.
+     */
+    public int bottom(){
+        return topLeft.Y + height;
     }
     
     /**
@@ -85,8 +88,8 @@ public class Rectangle {
      */
     public boolean contains(Point point){
         // remember only left and upper are inclusive
-        if(point.X >= bounds.Left && point.X < bounds.Right &&
-                point.Y <= bounds.Upper && point.Y > bounds.Lower)
+        if(point.X >= left() && point.X < right() &&
+                point.Y >= top() && point.Y < bottom())
             return true; // contained
         return false; // not contained
     }
@@ -96,16 +99,11 @@ public class Rectangle {
      * @return Whether this rectangle intersects with rect.
      */
     public boolean intersects(Rectangle other){
-        // This is incorrect better fix this junk
-        if(((this.bounds.Left < other.bounds.Left && 
-                this.bounds.Right > other.bounds.Left) || 
-                (this.bounds.Left < other.bounds.Right && 
-                this.bounds.Right > other.bounds.Right)) 
-                && 
-                (this.bounds.Lower < other.bounds.Upper && 
-                this.bounds.Upper > other.bounds.Upper) ||
-                (this.bounds.Lower < other.bounds.Lower && 
-                this.bounds.Upper > other.bounds.Lower))
+        // no bound on this is beyond the opposite bound of other
+        if(!(this.left() > other.right() ||
+                this.right() < other.left() || 
+                this.top() > other.bottom() ||
+                this.bottom() < other.top()))
             return true; // intersect
         return false; // no intersect
     }
