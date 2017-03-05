@@ -18,7 +18,13 @@ public class Rectangle {
     private int width;
     private int height;
     
-    public static enum Quadrant{NorthEast, NorthWest, SouthWest, SouthEast, None};
+    public static enum Quadrant{
+        NorthEast(0), NorthWest(1), SouthWest(2), SouthEast(3), None(-1);
+        
+        private final int val;
+        Quadrant(int val) { this.val = val; }
+        public int val() { return val; }
+    }
 
     /**
      * Creates a default 1x1 rectangle with top left point at (0,0).
@@ -82,6 +88,38 @@ public class Rectangle {
      */
     public int bottom(){
         return topLeft.Y + height;
+    }
+    
+    /**
+     * @return The North West quadrant of this rectangle.
+     */
+    public Rectangle quadrantNorthWest(){
+        return new Rectangle(top(), left(), 
+                left() + width/2, top() + height/2);
+    }
+    
+    /**
+     * @return The North East quadrant of this rectangle.
+     */
+    public Rectangle quadrantNorthEast(){
+        return new Rectangle(top(), left() + width/2, 
+                right(), top() + height/2);
+    }
+    
+    /**
+     * @return The South West quadrant of this rectangle.
+     */
+    public Rectangle quadrantSouthWest(){
+        return new Rectangle(top() + height/2, left(), 
+                left() + width/2, bottom());
+    }
+    
+    /**
+     * @return The South East quadrant of this rectangle.
+     */
+    public Rectangle quadrantSouthEast(){
+        return new Rectangle(top() + height/2, left() + width/2, 
+                right(), bottom());
     }
     
     /**

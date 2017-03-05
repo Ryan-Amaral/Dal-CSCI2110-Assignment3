@@ -20,17 +20,17 @@ public class SimpleTwoDimDictionary implements TwoDimDictionary {
     }
     
     @Override
-    public void insert(Point p) {
-        pointList.add(p);
+    public void insert(Point point) {
+        pointList.add(point);
     }
 
     @Override
-    public int count(Rectangle b) {
+    public int count(Rectangle bounds) {
         Iterator<Point> iterator = pointList.iterator();
         int count = 0; // the amount of bounded points
         
         while(iterator.hasNext()){
-            if(b.contains(iterator.next()))
+            if(bounds.contains(iterator.next()))
                 count++;
         }
         
@@ -38,12 +38,12 @@ public class SimpleTwoDimDictionary implements TwoDimDictionary {
     }
 
     @Override
-    public void query(ArrayList<Point> s, Rectangle b) {
+    public void query(ArrayList<Point> set, Rectangle bounds) {
         Iterator<Point> iterator = pointList.iterator();
         while(iterator.hasNext()){
             Point point = iterator.next();
-            if(b.contains(point))
-                s.add(point);
+            if(bounds.contains(point))
+                set.add(point);
         }
     }
 
