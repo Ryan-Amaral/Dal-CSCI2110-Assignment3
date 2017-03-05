@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * An array list based implementation of my TwoDimDictionary interface.
@@ -12,10 +13,15 @@ import java.util.ArrayList;
  */
 public class SimpleTwoDimDictionary implements TwoDimDictionary {
 
+    ArrayList<Point> pointList;
+    
+    public SimpleTwoDimDictionary(){
+        pointList = new ArrayList<Point>();
+    }
+    
     @Override
     public void insert(Point p) {
-        // TODO Auto-generated method stub
-        
+        pointList.add(p);
     }
 
     @Override
@@ -32,14 +38,19 @@ public class SimpleTwoDimDictionary implements TwoDimDictionary {
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        return pointList.size();
     }
 
     @Override
     public void display() {
-        // TODO Auto-generated method stub
-        
+        Iterator<Point> iterator = pointList.iterator();
+        System.out.print("{");
+        while(iterator.hasNext()){
+            System.out.print(iterator.next().toString());
+            if(iterator.hasNext())
+                System.out.print(", ");
+        }
+        System.out.print("}");
     }
 
 }

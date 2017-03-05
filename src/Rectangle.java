@@ -17,6 +17,8 @@ public class Rectangle {
     private Point topLeft; // the top left point of the rectangle
     private int width;
     private int height;
+    
+    public static enum Quadrant{NorthEast, NorthWest, SouthWest, SouthEast, None};
 
     /**
      * Creates a default 1x1 rectangle with top left point at (0,0).
@@ -106,5 +108,70 @@ public class Rectangle {
                 this.bottom() < other.top()))
             return true; // intersect
         return false; // no intersect
+    }
+    
+    /**
+     * @param other The other rectangle to check for containment within.
+     * @return Whether this rectangle is covered by / fully contained 
+     * within other.
+     */
+    public boolean coveredBy(Rectangle other){
+        // all bounds of this within bounds of other
+        if(this.top() > other.top() &&
+                this.left() > other.left() &&
+                this.right() < other.right() &&
+                this.bottom() < other.bottom())
+            return true; // contained
+        return false; // not contained
+    }
+    
+    /**
+     * @param point The point to check for quadrant position on.
+     * @return What quadrant in the rectangle point lies within.
+     */
+    public Quadrant quadrant(Point point){
+        // quadrants are inclusive on top and left
+        // quadrants are exclusive on bottom and right
+        
+        // in north
+        if(point.Y >= top() && 
+                point.Y < (top() + height/2)){
+            // in west
+            if(point.X >= left() &&
+                    point.X < (left() + width/2)){
+                return Quadrant.NorthWest;
+            }
+            // in east
+            else if(point.X >= (left() + width/2) &&
+                    point.X < right()){
+                return Quadrant.NorthEast;
+            }
+            // none
+            else{
+                return Quadrant.None;
+            }
+        }
+        // in south
+        else if(point.Y >= (top() + height/2) && 
+                point.Y < bottom()){
+            // in west
+            if(point.X >= left() &&
+                    point.X < (left() + width/2)){
+                return Quadrant.SouthWest;
+            }
+            // in east
+            else if(point.X >= (left() + width/2) &&
+                    point.X < right()){
+                return Quadrant.SouthEast;
+            }
+            // none
+            else{
+                return Quadrant.None;
+            }
+        }
+        // none
+        else{
+            return Quadrant.None;
+        }
     }
 }
