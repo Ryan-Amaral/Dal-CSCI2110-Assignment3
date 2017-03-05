@@ -26,14 +26,25 @@ public class SimpleTwoDimDictionary implements TwoDimDictionary {
 
     @Override
     public int count(Rectangle b) {
-        // TODO Auto-generated method stub
-        return 0;
+        Iterator<Point> iterator = pointList.iterator();
+        int count = 0; // the amount of bounded points
+        
+        while(iterator.hasNext()){
+            if(b.contains(iterator.next()))
+                count++;
+        }
+        
+        return count;
     }
 
     @Override
     public void query(ArrayList<Point> s, Rectangle b) {
-        // TODO Auto-generated method stub
-        
+        Iterator<Point> iterator = pointList.iterator();
+        while(iterator.hasNext()){
+            Point point = iterator.next();
+            if(b.contains(point))
+                s.add(point);
+        }
     }
 
     @Override
