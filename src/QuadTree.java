@@ -70,8 +70,35 @@ public class QuadTree implements TwoDimDictionary {
 
     @Override
     public int count(Rectangle testBounds) {
-        // TODO Auto-generated method stub
-        return 0;
+        int amount = 0; // the amount to return
+        
+        // no points so return 0
+        if(numPoints == 0)
+            amount = 0;
+        // this bounds within testBounds so all points are in
+        else if(bounds.coveredBy(testBounds))
+            amount = numPoints;
+        // this is point inside testBounds, return this point
+        else if(isPoint() && testBounds.contains(point))
+            amount = 1;
+        // not a point so look at children
+        else if(!isPoint()){
+            // sum up 4 children
+            for(int i = 0; i < 4; i++){
+                // only look into touched quadrants
+                if(subTrees[i].bounds.intersects(testBounds))
+                    amount += subTrees[i].count(testBounds);
+            }
+        }
+        
+        return amount;
+    }
+    
+    /**
+     * @return Whether this node is a point.
+     */
+    private boolean isPoint(){
+        return point != null;
     }
 
     // this method adapted from the assignment description
