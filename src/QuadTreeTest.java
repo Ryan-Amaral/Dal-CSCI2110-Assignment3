@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -108,5 +109,34 @@ public class QuadTreeTest {
         tree.insert(new Point(2, 3));
         
         tree.display();
+    }
+    
+    @Test
+    public void saveDotFile(){
+        QuadTree tree = new QuadTree(new Rectangle(0,0,10,10));
+        tree.insert(new Point(5, 5));
+        tree.insert(new Point(0, 0));
+        tree.insert(new Point(0, 5));
+        tree.insert(new Point(5, 0));
+        tree.insert(new Point(9, 2));
+        tree.insert(new Point(3, 6));
+        tree.insert(new Point(8, 3));
+        tree.insert(new Point(5, 4));
+        tree.insert(new Point(5, 8));
+        tree.insert(new Point(8, 9));
+        tree.insert(new Point(2, 2));
+        tree.insert(new Point(1, 1));
+        tree.insert(new Point(0, 4));
+        tree.insert(new Point(6, 6));
+        tree.insert(new Point(8, 7));
+        tree.insert(new Point(9, 4));
+        tree.insert(new Point(4, 7));
+        tree.insert(new Point(2, 3));
+        
+        try {
+            tree.saveDotFile("dotfile");
+        } catch (IOException e) {
+            fail("Could not save file");
+        }
     }
 }

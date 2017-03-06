@@ -1,3 +1,5 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -133,9 +135,14 @@ public class QuadTree implements TwoDimDictionary {
 
     @Override
     public void display() {
-        display(0);
+        display(0); // use internal method
     }
 
+    /**
+     * Internal method to help traverse the tree, keeping track of the 
+     * level.
+     * @param level The depth currently being looked at.
+     */
     private void display(int level){
         for(int i = 0; i < level * 3; i++)
             System.out.print(" "); // print spaces
@@ -160,6 +167,68 @@ public class QuadTree implements TwoDimDictionary {
         }
         else{
             System.out.println(point.toString());
+        }
+    }
+    
+    /**
+     * Saves a dot file for good visualization of this structure
+     * using Graphviz.
+     * @param fileName The name of the file to save to.
+     */
+    public void saveDotFile(String fileName) throws IOException{
+        FileOutputStream ostream = null;
+        
+        try{
+            ostream = new FileOutputStream(fileName + ".dot");
+            ostream.write(toDotString().getBytes());
+        }finally{
+            ostream.close();
+        }
+    }
+    
+    /**
+     * @return A string representation of this structure in the dot file
+     * format.
+     */
+    private String toDotString(){
+        String output = new String(); // the string to write to
+        output += "graph quadtree {";
+        dotStringRecursor(output);
+        output += "}";
+        return output;
+    }
+    
+    /**
+     * Helps construct a dot file string.
+     * @param input
+     */
+    private void dotStringRecursor(String input){
+        if(!isPoint()){
+            // no children, so is empty
+            if(subTrees == null){
+                input += "Empty;\n";
+            }
+            // print children
+            else{
+                input += "Parent -- "; 
+                subTrees[Rectangle.Quadrant.NorthEast.val()].dotStringRecursor(input);
+                input += ";\n";
+                
+                input += "Parent -- "; 
+                subTrees[Rectangle.Quadrant.NorthWest.val()].dotStringRecursor(input);
+                input += ";\n";
+                
+                input += "Parent -- "; 
+                subTrees[Rectangle.Quadrant.SouthWest.val()].dotStringRecursor(input);
+                input += ";\n";
+                
+                input += "Parent -- "; 
+                subTrees[Rectangle.Quadrant.SouthEast.val()].dotStringRecursor(input);
+                input += ";\n";
+            }
+        }
+        else{
+            input += point.toString() + ";\n";
         }
     }
 }
