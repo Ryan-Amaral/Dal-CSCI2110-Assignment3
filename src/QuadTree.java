@@ -28,8 +28,12 @@ public class QuadTree implements TwoDimDictionary {
     // this method adapted from the assignment description
     @Override
     public void insert(Point newPoint) {
+        // OOB
+        if(!bounds.contains(newPoint)){
+            return;
+        }
         // an empty leaf
-        if(numPoints == 0){
+        else if(numPoints == 0){
             this.point = newPoint; // make not empty leaf
         }
         // a filled leaf
@@ -129,8 +133,33 @@ public class QuadTree implements TwoDimDictionary {
 
     @Override
     public void display() {
-        // TODO Auto-generated method stub
-        
+        display(0);
     }
 
+    private void display(int level){
+        for(int i = 0; i < level * 3; i++)
+            System.out.print(" "); // print spaces
+        
+        // not a point
+        if(!isPoint()){
+            // no children
+            if(subTrees == null){
+                System.out.println("0"); // represents Empty child
+                return;
+            }
+            // is parent
+            else{
+                System.out.println("P"); // represents parent
+            }
+            
+            // print all children
+            subTrees[Rectangle.Quadrant.NorthEast.val()].display(level + 1);
+            subTrees[Rectangle.Quadrant.NorthWest.val()].display(level + 1);
+            subTrees[Rectangle.Quadrant.SouthWest.val()].display(level + 1);
+            subTrees[Rectangle.Quadrant.SouthEast.val()].display(level + 1);
+        }
+        else{
+            System.out.println(point.toString());
+        }
+    }
 }

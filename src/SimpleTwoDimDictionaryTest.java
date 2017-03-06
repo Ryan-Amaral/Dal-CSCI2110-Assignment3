@@ -82,4 +82,22 @@ public class SimpleTwoDimDictionaryTest {
         assertEquals(2, simple.size());
         assertEquals(2, simple.size());
     }
+    
+    @Test
+    public void testDisplay(){
+        SimpleTwoDimDictionary simple = new SimpleTwoDimDictionary();
+        simple.insert(new Point(5, 5));
+        simple.insert(new Point(12, 5));
+        simple.insert(new Point(5, 12));
+        simple.insert(new Point(0, 0));
+        simple.insert(new Point(0, 10));
+        simple.insert(new Point(10, 0));
+        simple.insert(new Point(10, 10));
+        simple.insert(new Point(5, 10));
+        simple.insert(new Point(10, 5));
+        simple.insert(new Point(0, 5));
+        simple.insert(new Point(5, 0));
+        
+        simple.display();
+    }
 }
