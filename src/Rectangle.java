@@ -155,10 +155,10 @@ public class Rectangle {
      */
     public boolean coveredBy(Rectangle other){
         // all bounds of this within bounds of other
-        if(this.top() > other.top() &&
-                this.left() > other.left() &&
-                this.right() < other.right() &&
-                this.bottom() < other.bottom())
+        if(this.top() >= other.top() &&
+                this.left() >= other.left() &&
+                this.right() <= other.right() &&
+                this.bottom() <= other.bottom())
             return true; // contained
         return false; // not contained
     }
