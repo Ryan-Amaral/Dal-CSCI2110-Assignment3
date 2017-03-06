@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -179,7 +180,8 @@ public class QuadTree implements TwoDimDictionary {
         FileOutputStream ostream = null;
         
         try{
-            ostream = new FileOutputStream(fileName + ".dot");
+            File file = new File("output/dotfile" + ".dot");
+            ostream = new FileOutputStream(file);
             ostream.write(toDotString().getBytes());
         }finally{
             ostream.close();
