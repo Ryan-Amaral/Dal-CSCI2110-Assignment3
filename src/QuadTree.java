@@ -191,44 +191,72 @@ public class QuadTree implements TwoDimDictionary {
      * format.
      */
     private String toDotString(){
-        String output = new String(); // the string to write to
-        output += "graph quadtree {";
-        dotStringRecursor(output);
-        output += "}";
-        return output;
+        StringBuilder output = new StringBuilder(); // the string to write to
+        output.append("digraph quadtree {\n");
+        dotStringRecursor(output, 0);
+        output.append("}");
+        return output.toString();
     }
     
     /**
      * Helps construct a dot file string.
-     * @param input
+     * @param input The string to append to.
+     * @param id The id for differentiating nodes.
      */
-    private void dotStringRecursor(String input){
+    private int dotStringRecursor(StringBuilder input, int id){
+        
+        // increment this everytime
+        String thisThing = "thing" + ((Integer)(++id)).toString();
+        
+        // not a point
         if(!isPoint()){
             // no children, so is empty
             if(subTrees == null){
-                input += "Empty;\n";
+                input.append("    " + thisThing + " [shape=circle,color=red,label=\"Empty\"];\n");
             }
-            // print children
+            // has children
             else{
-                input += "Parent -- "; 
-                subTrees[Rectangle.Quadrant.NorthEast.val()].dotStringRecursor(input);
-                input += ";\n";
+                // create the parent thing
+                input.append("    " + thisThing + "[shape=box,color=black,label=\"Parent\"];\n");
                 
-                input += "Parent -- "; 
-                subTrees[Rectangle.Quadrant.NorthWest.val()].dotStringRecursor(input);
-                input += ";\n";
+                // do this function to all children, because this has children
+                String thisThingChild1 = "thing" + ((Integer)(id + 1)).toString();
+                id = subTrees[Rectangle.Quadrant.NorthEast.val()].dotStringRecursor(input, id);
+                String thisThingChild2 = "thing" + ((Integer)(id + 1)).toString();
+                id = subTrees[Rectangle.Quadrant.NorthWest.val()].dotStringRecursor(input, id);
+                String thisThingChild3 = "thing" + ((Integer)(id + 1)).toString();
+                id = subTrees[Rectangle.Quadrant.SouthWest.val()].dotStringRecursor(input, id);
+                String thisThingChild4 = "thing" + ((Integer)(id + 1)).toString();
+                id = subTrees[Rectangle.Quadrant.SouthEast.val()].dotStringRecursor(input, id);
                 
-                input += "Parent -- "; 
-                subTrees[Rectangle.Quadrant.SouthWest.val()].dotStringRecursor(input);
-                input += ";\n";
-                
-                input += "Parent -- "; 
-                subTrees[Rectangle.Quadrant.SouthEast.val()].dotStringRecursor(input);
-                input += ";\n";
+                // link this node to children
+                input.append("    " + thisThing + " -> " + thisThingChild1 + ";\n");
+                input.append("    " + thisThing + " -> " + thisThingChild2 + ";\n");
+                input.append("    " + thisThing + " -> " + thisThingChild3 + ";\n");
+                input.append("    " + thisThing + " -> " + thisThingChild4 + ";\n");
             }
         }
+        // is a point
         else{
-            input += point.toString() + ";\n";
+            input.append("    " + thisThing +"[shape=circle,color=green,label=\"" + 
+                    point.toString() + "\"];\n");
         }
+        
+        return id;
+    }
+    
+    /**
+     * @return Teh string representation of this node. "Empty" if the node
+     * has no children and no point assigned, "Parent" if the node has 
+     * children, otherwise returns the point's toString() method.
+     */
+    private String nodeString(){
+        if(point == null)
+            if(subTrees == null)
+                return "Empty";
+            else
+                return "Parent";
+        else
+            return point.toString();
     }
 }
