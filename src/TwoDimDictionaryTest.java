@@ -92,7 +92,7 @@ public class TwoDimDictionaryTest {
         // display the structures
         System.out.print("Simple implementation (Array List): ");
         simple.display();
-        System.out.print("Quad Tree implementation: ");
+        System.out.print("\nQuad Tree implementation: ");
         tree.display();
         // also get file for tree
         try {
