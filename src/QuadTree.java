@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * 
  * Assumptions/Restrictions: 
  * 
- * Noteworthy Features:
+ * Noteworthy Features: Printing to a dot file.
  * 
  * @author Ryan Amaral
  *

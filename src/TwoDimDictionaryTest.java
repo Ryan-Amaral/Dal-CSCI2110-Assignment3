@@ -6,13 +6,24 @@ import java.util.Timer;
 
 import org.junit.Test;
 
+// my analysis
+/*
+ * Insert: Quad tree take about double the time to insert elements
+ * as the simple implementation does for 2000 calls.
+ * Count: Quad tree consistently  performs this operation about
+ * 2.5 times faster than the simple implementation for 10000 calls.
+ * Overall: Quad tree is better for large numbers to have useful
+ * time for searches compared the simple implementation.
+ * */
+
 /**
  * Test QuadTree and SimpleTwoDimDictionary together to ensure that they
  * both get the same results.
  * 
- * Assumptions/Restrictions: 
+ * Assumptions/Restrictions: For large amounts of points, quadtree 
+ * sometimes gives a stack overflow error.
  * 
- * Noteworthy Features:
+ * Noteworthy Features: Printing to a dot file
  * 
  * @author Ryan Amaral
  *
@@ -79,7 +90,9 @@ public class TwoDimDictionaryTest {
         }
         
         // display the structures
+        System.out.print("Simple implementation (Array List): ");
         simple.display();
+        System.out.print("Quad Tree implementation: ");
         tree.display();
         // also get file for tree
         try {
@@ -135,7 +148,7 @@ public class TwoDimDictionaryTest {
         }
         timeEnd = System.nanoTime();
         
-        System.out.println("Adding " + points + " points to Simple " + (timeEnd - timeStart)/1000000 + " nanoseconds.");
+        System.out.println("Adding " + points + " points to Simple took " + (timeEnd - timeStart)/1000000 + " nanoseconds.");
         
         
         // now test time to count
