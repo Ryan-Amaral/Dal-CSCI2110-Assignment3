@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -18,13 +19,14 @@ import org.junit.Test;
 public class TwoDimDictionaryTest {
     
     /**
-     * Test a bunch of random rectangles and points.
+     * Test a bunch of random rectangles and points and make sure both 
+     * implementations give the same results.
      */
     @Test
     public void bigTest(){
         // for bounds size
-        // exp from 5 to 10 so 2^exp is from 32 to 1024
-        int exponent = (int) (Math.random() * 6) + 5;
+        // exp from 9 to 12 so 2^exp is from 512 to 4096
+        int exponent = (int) (Math.random() * 4) + 9;
         int upperBound = (int) Math.pow(2, exponent);
         QuadTree tree = new QuadTree(
                 new Rectangle(1, 1, upperBound, upperBound));
@@ -46,16 +48,43 @@ public class TwoDimDictionaryTest {
         // size should be equal
         assertEquals(tree.size(), simple.size());
         
-        // try out 10 different test rectangle queries/counts
-        int queries = 100;
-        // hold counts
-        int treeCount;
-        int simpleCount;
-        // hold query sets
-        ArrayList<Point> treeSet = new ArrayList<Point>();
-        ArrayList<Point> simpleSet = new ArrayList<Point>();
+        // try out 100 different test rectangle queries/counts
+        int queries = 10000;
+        // query sets
+        ArrayList<Point> treeSet;
+        ArrayList<Point> simpleSet;
+        Rectangle rect;
         for(int i = 0; i < queries; i++){
+            // reset sets
+            treeSet = new ArrayList<Point>();
+            simpleSet = new ArrayList<Point>();
             
+            // create random query rectangle
+            rect = new Rectangle(1,1,
+                    (int)(Math.random() * upperBound) + 1,
+                    (int)(Math.random() * upperBound) + 1);
+            
+            // get counts
+            assertEquals(tree.count(rect), simple.count(rect));
+            
+            // do queries
+            tree.query(treeSet, rect);
+            simple.query(simpleSet, rect);
+            
+            // make sure same elements are present
+            for(int j = 0; j < treeSet.size(); j++){
+                assertTrue(simpleSet.contains(treeSet.get(j)));
+            }
+        }
+        
+        // display the structures
+        simple.display();
+        tree.display();
+        // also get file for tree
+        try {
+            tree.saveDotFile("BigTestResults");
+        } catch (IOException e) {
+            System.out.println("Fail");
         }
     }
 
