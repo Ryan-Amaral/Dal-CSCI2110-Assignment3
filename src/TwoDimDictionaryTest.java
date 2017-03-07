@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
 
 import org.junit.Test;
 
@@ -86,6 +87,105 @@ public class TwoDimDictionaryTest {
         } catch (IOException e) {
             System.out.println("Fail");
         }
+    }
+    
+    /**
+     * Compare the time used between the two implementation for insert
+     * and count.
+     */
+    @Test
+    public void timeCompare(){
+        int upperBound = 4096;
+        QuadTree tree = new QuadTree(
+                new Rectangle(1, 1, upperBound, upperBound));
+        SimpleTwoDimDictionary simple = new SimpleTwoDimDictionary(
+                new Rectangle(1, 1, upperBound, upperBound));
+        
+        // for timing
+        long timeStart;
+        long timeEnd;
+        
+        // insert 2000 random points
+        // any larger frequently causes stack overflow
+        // on my laptop on quadtree
+        int points = 2000; 
+        Point point;
+        
+        // first time quadtree
+        timeStart = System.nanoTime();
+        for(int i = 0; i < points; i++){
+            // point in appropriate range
+            point = new Point(
+                    (int)(Math.random() * upperBound) + 1, 
+                    (int)(Math.random() * upperBound) + 1);
+            tree.insert(point);
+        }
+        timeEnd = System.nanoTime();
+        
+        System.out.println("Adding " + points + " points to QuadTree took " + (timeEnd - timeStart)/1000000 + " nanoseconds.");
+        
+        // time simple
+        timeStart = System.nanoTime();
+        for(int i = 0; i < points; i++){
+            // point in appropriate range
+            point = new Point(
+                    (int)(Math.random() * upperBound) + 1, 
+                    (int)(Math.random() * upperBound) + 1);
+            simple.insert(point);
+        }
+        timeEnd = System.nanoTime();
+        
+        System.out.println("Adding " + points + " points to Simple " + (timeEnd - timeStart)/1000000 + " nanoseconds.");
+        
+        
+        // now test time to count
+        
+        // try out 1000000 different test rectangle queries/counts
+        int counts = 10000;
+        Rectangle rect;
+        
+        // count tree
+        timeStart = System.nanoTime();
+        for(int i = 0; i < counts; i++){
+            // create random query rectangle
+            rect = new Rectangle(
+                    ((int)(Math.random() * upperBound) + 1) / 2,
+                    ((int)(Math.random() * upperBound) + 1) / 2,
+                    (int)(Math.random() * upperBound/2) + upperBound/2,
+                    (int)(Math.random() * upperBound/2) + upperBound/2);
+            
+            tree.count(rect);
+        }
+        timeEnd = System.nanoTime();
+        
+        System.out.println("Calling count " + counts + " times on Quadree takes " 
+                + (timeEnd - timeStart)/1000000 + " nanoseconds.");
+        
+        // now count simple 
+        timeStart = System.nanoTime();
+        for(int i = 0; i < counts; i++){
+            // create random query rectangle
+            rect = new Rectangle(
+                    ((int)(Math.random() * upperBound) + 1) / 2,
+                    ((int)(Math.random() * upperBound) + 1) / 2,
+                    (int)(Math.random() * upperBound/2) + upperBound/2,
+                    (int)(Math.random() * upperBound/2) + upperBound/2);
+            
+            simple.count(rect);
+        }
+        timeEnd = System.nanoTime();
+        
+        System.out.println("Calling count " + counts + " times on Simple takes " 
+                + (timeEnd - timeStart)/1000000 + " nanoseconds.");
+        
+        /*
+         * Insert: Quad tree take about double the time to insert elements
+         * as the simple implementation does.
+         * Count: Quad tree consistently  performs this operation about
+         * 2.5 times faster than the simple implementation.
+         * Overall: Quad tree is better for large numbers to have useful
+         * time for searches compared the simple implementation.
+         * */
     }
 
     @Test
