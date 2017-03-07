@@ -8,7 +8,8 @@ public class SimpleTwoDimDictionaryTest {
 
     @Test
     public void testInsert() {
-        SimpleTwoDimDictionary simple = new SimpleTwoDimDictionary();
+        SimpleTwoDimDictionary simple = 
+                new SimpleTwoDimDictionary(new Rectangle(0,0,10,10));
         simple.insert(new Point(5,2));
         assertEquals(1, simple.size());
         simple.insert(new Point(1,5));
@@ -18,7 +19,8 @@ public class SimpleTwoDimDictionaryTest {
 
     @Test
     public void testCount() {
-        SimpleTwoDimDictionary simple = new SimpleTwoDimDictionary();
+        SimpleTwoDimDictionary simple = 
+                new SimpleTwoDimDictionary(new Rectangle(0,0,10,10));
         simple.insert(new Point(5, 5));
         simple.insert(new Point(12, 5));
         simple.insert(new Point(5, 12));
@@ -36,7 +38,8 @@ public class SimpleTwoDimDictionaryTest {
 
     @Test
     public void testQuery() {
-        SimpleTwoDimDictionary simple = new SimpleTwoDimDictionary();
+        SimpleTwoDimDictionary simple = 
+                new SimpleTwoDimDictionary(new Rectangle(0,0,10,10));
         Point point1 = new Point(5, 5); 
         Point point2 = new Point(12, 5); 
         Point point3 = new Point(5, 12); 
@@ -74,7 +77,8 @@ public class SimpleTwoDimDictionaryTest {
 
     @Test
     public void testSize() {
-        SimpleTwoDimDictionary simple = new SimpleTwoDimDictionary();
+        SimpleTwoDimDictionary simple = 
+                new SimpleTwoDimDictionary(new Rectangle(0,0,10,10));
         assertEquals(0, simple.size());
         simple.insert(new Point(5,2));
         assertEquals(1, simple.size());
@@ -85,7 +89,8 @@ public class SimpleTwoDimDictionaryTest {
     
     @Test
     public void testDisplay(){
-        SimpleTwoDimDictionary simple = new SimpleTwoDimDictionary();
+        SimpleTwoDimDictionary simple = 
+                new SimpleTwoDimDictionary(new Rectangle(0,0,10,10));
         simple.insert(new Point(5, 5));
         simple.insert(new Point(12, 5));
         simple.insert(new Point(5, 12));

@@ -1,0 +1,11 @@
+digraph quadtree {
+    thing1[shape=box,color=black,label="Parent"];
+    thing2[shape=circle,color=green,label="(5,0)"];
+    thing3[shape=circle,color=green,label="(0,0)"];
+    thing4[shape=circle,color=green,label="(0,5)"];
+    thing5[shape=circle,color=green,label="(5,5)"];
+    thing1 -> thing2;
+    thing1 -> thing3;
+    thing1 -> thing4;
+    thing1 -> thing5;
+}

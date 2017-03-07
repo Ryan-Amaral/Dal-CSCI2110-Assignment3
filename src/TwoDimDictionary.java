@@ -15,7 +15,8 @@ import java.util.ArrayList;
 public interface TwoDimDictionary {
     
     /**
-     * Insert a point into the data structure.
+     * Insert a point into the data structure. Only inserts if it is 
+     * within bounds.
      * @param point The point to insert.
      */
     public void insert(Point point);

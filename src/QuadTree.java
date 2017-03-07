@@ -180,7 +180,7 @@ public class QuadTree implements TwoDimDictionary {
         FileOutputStream ostream = null;
         
         try{
-            File file = new File("output/dotfile" + ".dot");
+            File file = new File("output/" + fileName + ".dot");
             ostream = new FileOutputStream(file);
             ostream.write(toDotString().getBytes());
         }finally{

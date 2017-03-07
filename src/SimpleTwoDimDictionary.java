@@ -14,14 +14,18 @@ import java.util.Iterator;
 public class SimpleTwoDimDictionary implements TwoDimDictionary {
 
     ArrayList<Point> pointList;
+    Rectangle bounds;
     
-    public SimpleTwoDimDictionary(){
+    public SimpleTwoDimDictionary(Rectangle bounds){
+        this.bounds = bounds;
         pointList = new ArrayList<Point>();
     }
     
     @Override
     public void insert(Point point) {
-        pointList.add(point);
+        // only insert if in bounds
+        if(bounds.contains(point))
+            pointList.add(point);
     }
 
     @Override

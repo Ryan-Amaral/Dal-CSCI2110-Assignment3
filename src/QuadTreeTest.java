@@ -33,6 +33,12 @@ public class QuadTreeTest {
         tree.insert(new Point(5, 0));
         // all points and rectangle verified from rectangle test
         assertEquals(4, tree.count(new Rectangle(0,0,10,10)));
+        
+        try {
+            tree.saveDotFile("dotfileCount");
+        } catch (IOException e) {
+            fail("Could not save file");
+        }
     }
 
     @Test
