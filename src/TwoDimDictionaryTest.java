@@ -57,10 +57,10 @@ public class TwoDimDictionaryTest {
             simple.insert(point);
         }
         
-        // size should be equal
-        assertEquals(tree.size(), simple.size());
+        // sizes no longer equal because tree does not accept duplicates
+        //assertEquals(tree.size(), simple.size());
         
-        // try out 100 different test rectangle queries/counts
+        // try out 10000 different test rectangle queries/counts
         int queries = 10000;
         // query sets
         ArrayList<Point> treeSet;
@@ -76,8 +76,8 @@ public class TwoDimDictionaryTest {
                     (int)(Math.random() * upperBound) + 1,
                     (int)(Math.random() * upperBound) + 1);
             
-            // get counts
-            assertEquals(tree.count(rect), simple.count(rect));
+            // may not be equal as tree does not take duplicates
+            // assertEquals(tree.count(rect), simple.count(rect));
             
             // do queries
             tree.query(treeSet, rect);
@@ -85,6 +85,8 @@ public class TwoDimDictionaryTest {
             
             // make sure same elements are present
             for(int j = 0; j < treeSet.size(); j++){
+                // this one can still be equal as they contain the same,
+                // even if not same amount
                 assertTrue(simpleSet.contains(treeSet.get(j)));
             }
         }
@@ -118,10 +120,10 @@ public class TwoDimDictionaryTest {
         long timeStart;
         long timeEnd;
         
-        // insert 2000 random points
+        // insert 10000 random points
         // any larger frequently causes stack overflow
         // on my laptop on quadtree
-        int points = 2000; 
+        int points = 100000; 
         Point point;
         
         // first time quadtree
@@ -154,7 +156,7 @@ public class TwoDimDictionaryTest {
         // now test time to count
         
         // try out 1000000 different test rectangle queries/counts
-        int counts = 10000;
+        int counts = 100000;
         Rectangle rect;
         
         // count tree
@@ -212,8 +214,15 @@ public class TwoDimDictionaryTest {
         assertEquals(tree.size(), simple.size());
         tree.insert(new Point(1,5));
         simple.insert(new Point(1,5));
+        // double test
         assertEquals(tree.size(), simple.size());
         assertEquals(tree.size(), simple.size());
+        
+        // insert a duplicate point
+        tree.insert(new Point(5,2));
+        simple.insert(new Point(5,2));
+        // tree size should be 1 less as the tree does not accept duplicates
+        assertEquals(tree.size()+1, simple.size());
     }
 
     @Test
@@ -230,6 +239,7 @@ public class TwoDimDictionaryTest {
         tree.insert(new Point(10, 5));
         tree.insert(new Point(0, 5));
         tree.insert(new Point(5, 0));
+        
         
         SimpleTwoDimDictionary simple = 
                 new SimpleTwoDimDictionary(new Rectangle(0,0,10,10));

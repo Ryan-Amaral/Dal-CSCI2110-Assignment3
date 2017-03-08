@@ -19,6 +19,10 @@ public class QuadTree implements TwoDimDictionary {
     int numPoints = 0; // amount of points within bounds
     Point point = null; // stores a point if this is external node
     QuadTree[] subTrees = null; // the children of this node if it is internal
+    
+    // I have to use this to prevent stack overflow
+    // to prevent duplicates
+    private static boolean insertBreak;
 
     /**
      * Creates a QuadTree with the specified bounds.
@@ -31,6 +35,7 @@ public class QuadTree implements TwoDimDictionary {
     // this method adapted from the assignment description
     @Override
     public void insert(Point newPoint) {
+        insertBreak = false;
         // OOB
         if(!bounds.contains(newPoint)){
             return;
@@ -38,13 +43,13 @@ public class QuadTree implements TwoDimDictionary {
         // an empty leaf
         else if(numPoints == 0){
             this.point = newPoint; // make not empty leaf
-            numPoints++; // one more point in this node (works recursively)
         }
         // a filled leaf
         else if(numPoints == 1){
-            // don't insert repeat point
+            // cannot insert duplicate point
             if(newPoint.X == this.point.X &&
                     newPoint.Y == this.point.Y){
+                insertBreak = true;
                 return;
             }
             // make it an internal node
@@ -62,6 +67,10 @@ public class QuadTree implements TwoDimDictionary {
             subTrees[bounds.quadrant(newPoint).val()]
                     .insert(newPoint);
         }
+        // do not add points if there was duplicate
+        if(insertBreak)
+            return;
+        numPoints++; // one more point in this node (works recursively)
     }
     
     /**
