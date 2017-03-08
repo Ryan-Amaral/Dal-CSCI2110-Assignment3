@@ -25,6 +25,26 @@ public class Rectangle {
         Quadrant(int val) { this.val = val; }
         public int val() { return val; }
     }
+    
+    /**
+     * Moves the rectangle by the specified amount.
+     * @param dx The change in x.
+     * @param dy The change in y.
+     */
+    public void move(int dx, int dy){
+        topLeft.X += dx;
+        topLeft.Y += dy;
+    }
+    
+    /**
+     * Moves the rectangle's top left corner to the specified location.
+     * @param x The new x location.
+     * @param y The new y location.
+     */
+    public void moveTo(int x, int y){
+        topLeft.X = x;
+        topLeft.Y = y;
+    }
 
     /**
      * Creates a default 1x1 rectangle with top left point at (0,0).

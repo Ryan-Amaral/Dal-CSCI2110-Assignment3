@@ -38,9 +38,15 @@ public class QuadTree implements TwoDimDictionary {
         // an empty leaf
         else if(numPoints == 0){
             this.point = newPoint; // make not empty leaf
+            numPoints++; // one more point in this node (works recursively)
         }
         // a filled leaf
         else if(numPoints == 1){
+            // don't insert repeat point
+            if(newPoint.X == this.point.X &&
+                    newPoint.Y == this.point.Y){
+                return;
+            }
             // make it an internal node
             split(); // creates the children, assigns their bounds
             // insert this point into child in right quadrant
@@ -56,7 +62,6 @@ public class QuadTree implements TwoDimDictionary {
             subTrees[bounds.quadrant(newPoint).val()]
                     .insert(newPoint);
         }
-        numPoints++; // one more point in this node (works recursively)
     }
     
     /**

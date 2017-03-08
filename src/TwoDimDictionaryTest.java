@@ -45,8 +45,8 @@ public class TwoDimDictionaryTest {
         SimpleTwoDimDictionary simple = new SimpleTwoDimDictionary(
                 new Rectangle(1, 1, upperBound, upperBound));
         
-        // insert 100 random points
-        int points = 100;
+        // insert 10000 random points
+        int points = 10000;
         Point point;
         for(int i = 0; i < points; i++){
             // point in appropriate range
