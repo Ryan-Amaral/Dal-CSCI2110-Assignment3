@@ -9,11 +9,18 @@
 <pre>
 Adding 100000 points to QuadTree took 92 nanoseconds.
 Adding 100000 points to Simple took 8 nanoseconds.
-Calling count 100000 times on Quadree takes 13173 nanoseconds.
+Calling count 100000 times on QuadTree takes 13173 nanoseconds.
 Calling count 100000 times on Simple takes 87299 nanoseconds.
 </pre>
 
-<h3>Printing Structures</h3>
+<h3>From QuadTreePlayground.java:</h3>
+<pre>
+The most points the found by the finder at once is: 22.
+The least points the found by the finder at once is: 2.
+The average points the found by the finder at once is: 9.522592592592593.
+</pre>
+
+<h3>Printing Structures (Better versions in output directory)</h3>
 <pre>
 Simple implementation (Array List): {(82,258), (28,134), (112,174), (169,271), (254,46), (87,298), (237,299), (381,250), (322,220), (117,355), (500,458), (198,480), (56,432), (94,114), (508,84), (395,288), (367,84), (461,43), (125,114), (461,361), (155,251), (72,148), (124,428), (194,476), (301,250), (117,461), (421,221), (127,119), (492,442), (96,257), (31,104), (138,263), (496,208), (369,34), (289,139), (222,446), (108,276), (140,498), (178,176), (271,407), (507,242), (493,496), (211,236), (94,346), (203,138), (196,76), (170,365), (406,123), (286,115), (231,11), (366,164), (470,230), (297,334), (258,187), (250,363), (32,157), (341,212), (384,23), (384,446), (508,252), (349,258), (494,448), (116,448), (329,345), (207,219), (435,203), (22,419), (366,413), (9,127), (361,242), (35,263), (350,483), (324,509), (231,460), (444,457), (469,434), (429,243), (159,447), (471,411), (427,438), (293,417), (393,229), (7,77), (176,385), (410,117), (303,166), (469,272), (2,328), (415,449), (29,310), (394,414), (311,22), (49,419), (328,185), (420,143), (82,368), (80,198), (422,71)}
 Quad Tree implementation: 

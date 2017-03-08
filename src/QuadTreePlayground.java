@@ -17,7 +17,7 @@ public class QuadTreePlayground {
      * be inside that rectangle by varying position.
      */
     public static void maxPointsFinder(){
-        final int boundsWidthHeight = 20; // the width and height of qtree
+        final int boundsWidthHeight = 100; // the width and height of qtree
         QuadTree tree = 
                 new QuadTree(new Rectangle(
                         new Point(0,0), boundsWidthHeight, boundsWidthHeight));

@@ -94,7 +94,7 @@ public class TwoDimDictionaryTest {
         // display the structures
         System.out.print("Simple implementation (Array List): ");
         simple.display();
-        System.out.print("\nQuad Tree implementation: ");
+        System.out.print("\nQuad Tree implementation: \n");
         tree.display();
         // also get file for tree
         try {
@@ -173,7 +173,7 @@ public class TwoDimDictionaryTest {
         }
         timeEnd = System.nanoTime();
         
-        System.out.println("Calling count " + counts + " times on Quadree takes " 
+        System.out.println("Calling count " + counts + " times on QuadTree takes " 
                 + (timeEnd - timeStart)/1000000 + " nanoseconds.");
         
         // now count simple 
