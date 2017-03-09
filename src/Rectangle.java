@@ -155,7 +155,7 @@ public class Rectangle {
     }
     
     /**
-     * @param rect The rectangle to compare intersection with.
+     * @param other The rectangle to compare intersection with.
      * @return Whether this rectangle intersects with rect.
      */
     public boolean intersects(Rectangle other){

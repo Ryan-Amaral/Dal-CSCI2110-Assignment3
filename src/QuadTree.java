@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * An implementation of TwoDimDictionary that uses a quadree to be able
  * to perform query and count operation in O(log_4(n)).
  * 
- * Assumptions/Restrictions: 
+ * Assumptions/Restrictions: Does not accept duplicates.
  * 
  * Noteworthy Features: Printing to a dot file.
  * 

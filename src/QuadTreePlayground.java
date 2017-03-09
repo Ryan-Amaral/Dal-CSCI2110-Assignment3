@@ -1,4 +1,16 @@
 
+/**
+ * This is a simple program that creates a quad tree with many points
+ * as well as a rectangle, and tries to find the most points that can
+ * be inside that rectangle by varying the position of the rectangle.
+ * 
+ * Assumptions/Restrictions: 
+ * 
+ * Noteworthy Features: This whole file
+ * 
+ * @author Ryan Amaral
+ *
+ */
 public class QuadTreePlayground {
 
     /**
@@ -17,7 +29,7 @@ public class QuadTreePlayground {
      * be inside that rectangle by varying position.
      */
     public static void maxPointsFinder(){
-        final int boundsWidthHeight = 100; // the width and height of qtree
+        final int boundsWidthHeight = 1000; // the width and height of qtree
         QuadTree tree = 
                 new QuadTree(new Rectangle(
                         new Point(0,0), boundsWidthHeight, boundsWidthHeight));
@@ -26,7 +38,7 @@ public class QuadTreePlayground {
                 new Point(0,0), finderWidthHeight, finderWidthHeight);
         
         // put random points in tree
-        final int points = 1000; 
+        final int points = 10000; 
         Point point;
         for(int i = 0; i < points; i++){
             // point in appropriate range
@@ -57,11 +69,14 @@ public class QuadTreePlayground {
         }
         average /= moves;
         
-        System.out.println("The most points the found by the finder at once "
+        System.out.println("For a " + boundsWidthHeight + "x" + 
+                boundsWidthHeight + " QuadTree and a " + finderWidthHeight +
+                "x" + finderWidthHeight + " Finder Rectangle: ");
+        System.out.println("The most points found by the finder at once "
                 + "is: " + highest + ".");
-        System.out.println("The least points the found by the finder at once "
+        System.out.println("The least points found by the finder at once "
                 + "is: " + least + ".");
-        System.out.println("The average points the found by the finder at once "
+        System.out.println("The average points found by the finder at once "
                 + "is: " + average + ".");
     }
 }

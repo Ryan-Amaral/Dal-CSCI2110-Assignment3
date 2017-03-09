@@ -20,8 +20,8 @@ import org.junit.Test;
  * Test QuadTree and SimpleTwoDimDictionary together to ensure that they
  * both get the same results.
  * 
- * Assumptions/Restrictions: For large amounts of points, quadtree 
- * sometimes gives a stack overflow error.
+ * Assumptions/Restrictions: Quadtree does not accept duplicates, though
+ * simple implementation does.
  * 
  * Noteworthy Features: Printing to a dot file
  * 
@@ -123,7 +123,7 @@ public class TwoDimDictionaryTest {
         // insert 10000 random points
         // any larger frequently causes stack overflow
         // on my laptop on quadtree
-        int points = 100000; 
+        int points = 10000; 
         Point point;
         
         // first time quadtree
@@ -156,7 +156,7 @@ public class TwoDimDictionaryTest {
         // now test time to count
         
         // try out 1000000 different test rectangle queries/counts
-        int counts = 100000;
+        int counts = 10000;
         Rectangle rect;
         
         // count tree
