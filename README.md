@@ -15,9 +15,10 @@ Calling count 100000 times on Simple takes 87299 nanoseconds.
 
 <h3>From QuadTreePlayground.java:</h3>
 <pre>
-The most points the found by the finder at once is: 22.
-The least points the found by the finder at once is: 2.
-The average points the found by the finder at once is: 9.522592592592593.
+For a 1000x1000 QuadTree and a 10x10 Finder Rectangle: 
+The most points found by the finder at once is: 9.
+The least points found by the finder at once is: 0.
+The average points found by the finder at once is: 0.9946678910315274.
 </pre>
 
 <h3>Printing Structures (Better versions in output directory)</h3>
